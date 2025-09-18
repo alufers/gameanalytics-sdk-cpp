@@ -16,6 +16,10 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netinet/in.h>
 
+#import <IOKit/IOKitLib.h>
+
+#include <Metal/Metal.h>
+
 typedef struct {
     NSInteger majorVersion;
     NSInteger minorVersion;
@@ -101,6 +105,19 @@ int64_t getTotalDeviceMemory()
 {
     NSProcessInfo *info = [NSProcessInfo processInfo];
     return (uint64_t)info.physicalMemory;
+}
+
+const char* getGPUName()
+{
+    NSArray* devices = MTLCopyAllDevices();
+    if(devices && [devices count])
+    {
+        id device = devices[0];
+        NSString* name = [device name];
+        return [name UTF8String];
+    }
+    
+    return "";
 }
 
 #endif // IS_MAC

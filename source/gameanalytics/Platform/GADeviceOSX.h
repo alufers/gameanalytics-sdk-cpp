@@ -9,6 +9,7 @@ const char* getOSXVersion();
 const char* getConnectionType();
 int getNumCpuCores();
 int64_t getTotalDeviceMemory();
+const char* getGPUName();
 
 #endif
 
