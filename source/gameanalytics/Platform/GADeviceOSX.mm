@@ -26,7 +26,7 @@ typedef struct {
     NSInteger patchVersion;
 } MyOperatingSystemVersion;
 
-const char* getOSXVersion()
+std::string getOSXVersion()
 {
     if (floor(kCFCoreFoundationVersionNumber) > kCFCoreFoundationVersionNumber10_9)
     {
@@ -64,7 +64,7 @@ SCNetworkReachabilityRef createReachabilityRef()
     return reachabilityRef;
 }
 
-const char* getConnectionType()
+std::string getConnectionType()
 {
     // todo: keep this in a class
     static SCNetworkReachabilityRef reachabilityRef = createReachabilityRef();
@@ -107,7 +107,7 @@ int64_t getTotalDeviceMemory()
     return (uint64_t)info.physicalMemory;
 }
 
-const char* getGPUName()
+std::string getGPUName()
 {
     NSArray* devices = MTLCopyAllDevices();
     if(devices && [devices count])

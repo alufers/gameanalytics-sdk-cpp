@@ -2,14 +2,15 @@
 #define _GADEVICEOSX_H
 
 #include "GACommon.h"
+#include <string>
 
 #if IS_MAC
 
-const char* getOSXVersion();
-const char* getConnectionType();
+std::string getOSXVersion();
+std::string getConnectionType();
 int getNumCpuCores();
 int64_t getTotalDeviceMemory();
-const char* getGPUName();
+std::string getGPUName();
 
 #endif
 

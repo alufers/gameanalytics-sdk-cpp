@@ -17,7 +17,7 @@ static struct sigaction prevSigAction;
 
 std::string gameanalytics::GAPlatformMacOS::getOSVersion()
 {
-    const char* osxVersion = getOSXVersion();
+    std::string osxVersion = getOSXVersion();
     return getBuildPlatform() + " " + osxVersion;
 }
 
