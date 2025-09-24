@@ -426,6 +426,10 @@ namespace gameanalytics
                 out["session_num"] = getInstance()._sessionNum;
                 out["connection_type"] = device::GADevice::getConnectionType();
 
+                // playtime metrics
+                out["current_session_length"] = getInstance().calculateSessionLength();
+                out["lifetime_session_length"] = getInstance().getTotalSessionLength();
+
                 // ---- OPTIONAL ---- //
 
                 // A/B testing
