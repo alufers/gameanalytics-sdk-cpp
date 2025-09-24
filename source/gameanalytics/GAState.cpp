@@ -1094,8 +1094,8 @@ namespace gameanalytics
 
         void GAState::updateTotalSessionTime()
         {
-            int64_t totalSessionTime = getTotalSessionLength();
-            _gaStore.setState("total_session_time", std::to_string(totalSessionTime));
+            _totalElapsedSessionTime = getTotalSessionLength();
+            _gaStore.setState("total_session_time", std::to_string(_totalElapsedSessionTime));
         }
 
         std::string GAState::getBuild()
