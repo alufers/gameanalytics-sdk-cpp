@@ -461,17 +461,12 @@ namespace gameanalytics
         {
             constexpr uint32_t MAX_SIZE = 64u;
 
+            if (eventPart.empty())
+            {
+                return allowNull;
+            }
+
             size_t size = eventPart.length();
-            if (allowNull == true && size == 0)
-            {
-                return true;
-            }
-
-            if (size == 0)
-            {
-                return false;
-            }
-
             if (size > MAX_SIZE)
             {
                 return false;
