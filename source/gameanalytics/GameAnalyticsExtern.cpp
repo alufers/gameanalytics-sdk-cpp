@@ -256,6 +256,12 @@ GAErrorCode gameAnalytics_getRemoteConfigsContentAsString(char* out, int* size)
     return copyStringBuffer(returnValue, out, size);
 }
 
+GAErrorCode gameAnalytics_getRemoteConfigsValueAsJson(char* out, int* size)
+{
+    std::string returnValue = gameanalytics::GameAnalytics::getRemoteConfigsContentAsJson();
+    return copyStringBuffer(returnValue, out, size);
+}
+
 GAErrorCode gameAnalytics_getABTestingId(char* out, int* size)
 {
     std::string returnValue = gameanalytics::GameAnalytics::getABTestingId();
@@ -266,6 +272,47 @@ GAErrorCode gameAnalytics_getABTestingVariantId(char* out, int* size)
 {
     std::string returnValue = gameanalytics::GameAnalytics::getABTestingVariantId();
     return copyStringBuffer(returnValue, out, size);
+}
+
+long long gameAnalytics_getElapsedSessionTime()
+{
+    return gameanalytics::GameAnalytics::getElapsedSessionTime();
+}
+
+long long gameAnalytics_getElapsedTimeFromAllSessions()
+{
+    return gameanalytics::GameAnalytics::getElapsedTimeFromAllSessions();
+}
+
+long long gameAnalytics_getElapsedTimeForPreviousSession()
+{
+    return gameanalytics::GameAnalytics::getElapsedTimeForPreviousSession();
+}
+
+void gameAnalytics_enableSDKInit(GAStatus status)
+{
+    return gameanalytics::GameAnalytics::enableSDKInit(status);
+}
+
+void gameAnalytics_enableMemoryHistogram(GAStatus status)
+{
+    return gameanalytics::GameAnalytics::enableMemoryHistogram(status);
+}
+
+void gameAnalytics_enableFPSHistogram(GAFpsTracker tracker, GAStatus status)
+{
+    gameanaltics::FpsTracker fpsTracker = 
+    [=]() -> float
+    {
+        return tracker();
+    };
+    
+    return gameanalytics::GameAnalytics::enableFPSHistogram(fpsTracker, status);
+}
+
+void gameAnalytics_enableHardwareTracking(GAStatus status)
+{
+    return gameanalytics::GameAnalytics::enableHardwareTracking(status);
 }
 
 #endif

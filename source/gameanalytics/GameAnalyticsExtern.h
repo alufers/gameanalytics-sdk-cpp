@@ -29,6 +29,8 @@ enum GAStatus: char
 	EGAEnabled
 };
 
+typedef float(*GAFpsTracker)(void);
+
 GA_EXPORT void gameAnalytics_configureAvailableCustomDimensions01(const char **customDimensions, int size);
 GA_EXPORT void gameAnalytics_configureAvailableCustomDimensions02(const char **customDimensions, int size);
 GA_EXPORT void gameAnalytics_configureAvailableCustomDimensions03(const char **customDimensions, int size);
@@ -89,9 +91,19 @@ GA_EXPORT GAErrorCode gameAnalytics_getRemoteConfigsValueAsString(const char *ke
 GA_EXPORT GAErrorCode gameAnalytics_getRemoteConfigsValueAsStringWithDefaultValue(const char *key, const char *defaultValue, char* out, int* bufferSize);
 GA_EXPORT GAStatus    gameAnalytics_isRemoteConfigsReady();
 GA_EXPORT GAErrorCode gameAnalytics_getRemoteConfigsContentAsString(char* out, int* size);
+GA_EXPORT GAErrorCode gameAnalytics_getRemoteConfigsValueAsJson(char* out, int* size);
 
 GA_EXPORT GAErrorCode gameAnalytics_getABTestingId(char* out, int* size);
 GA_EXPORT GAErrorCode gameAnalytics_getABTestingVariantId(char* out, int* size);
+
+GA_EXPORT long long gameAnalytics_getElapsedSessionTime();
+GA_EXPORT long long gameAnalytics_getElapsedTimeFromAllSessions();
+GA_EXPORT long long gameAnalytics_getElapsedTimeForPreviousSession();
+
+GA_EXPORT void gameAnalytics_enableSDKInit(GAStatus status);
+GA_EXPORT void gameAnalytics_enableMemoryHistogram(GAStatus status);
+GA_EXPORT void gameAnalytics_enableFPSHistogram(GAFpsTracker tracker, GAStatus status);
+GA_EXPORT void gameAnalytics_enableHardwareTracking(GAStatus status);
 
 #ifdef __cplusplus
 }
