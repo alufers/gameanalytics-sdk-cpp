@@ -38,6 +38,7 @@ namespace gameanalytics
 
 		private:
 
+            mutable std::string _gpuModel;
 			static void signalHandler(int sig, siginfo_t* info, void* context);
 	};
 }

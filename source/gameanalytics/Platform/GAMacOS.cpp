@@ -17,7 +17,7 @@ static struct sigaction prevSigAction;
 
 std::string gameanalytics::GAPlatformMacOS::getOSVersion()
 {
-    const char* osxVersion = getOSXVersion();
+    std::string osxVersion = getOSXVersion();
     return getBuildPlatform() + " " + osxVersion;
 }
 
@@ -193,7 +193,12 @@ std::string gameanalytics::GAPlatformMacOS::getCpuModel() const
 
 std::string gameanalytics::GAPlatformMacOS::getGpuModel() const 
 {
-    return "Apple";
+    if(_gpuModel.empty())
+    {
+        _gpuModel = ::getGPUName();
+    }
+    
+    return _gpuModel;
 }
 
 int gameanalytics::GAPlatformMacOS::getNumCpuCores() const

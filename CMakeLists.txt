@@ -190,6 +190,8 @@ elseif(APPLE)
         "-framework Foundation"
         "-framework CoreServices"
         "-framework SystemConfiguration"
+        "-framework Metal"
+        "-framework MetalKit"
     )
 
     create_source_groups(MACOS_SOURCES)

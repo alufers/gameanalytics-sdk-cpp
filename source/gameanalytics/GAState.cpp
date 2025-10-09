@@ -426,6 +426,10 @@ namespace gameanalytics
                 out["session_num"] = getInstance()._sessionNum;
                 out["connection_type"] = device::GADevice::getConnectionType();
 
+                // playtime metrics
+                out["current_session_length"] = getInstance().calculateSessionLength();
+                out["lifetime_session_length"] = getInstance().getTotalSessionLength();
+
                 // ---- OPTIONAL ---- //
 
                 // A/B testing
@@ -535,6 +539,11 @@ namespace gameanalytics
             return "";
         }
 
+        int64_t GAState::getLastSessionLength() const
+        {
+            return _lastSessionTime;
+        }
+
         int64_t GAState::getTotalSessionLength() const
         {
             return _totalElapsedSessionTime + calculateSessionLength<std::chrono::seconds>();
@@ -586,10 +595,11 @@ namespace gameanalytics
                 
                 try
                 {
-                    std::string cachedSessionTime = utilities::getOptionalValue<std::string>(state_dict, "total_session_time", "0");
+                    std::string cachedLastSessionTime = utilities::getOptionalValue<std::string>(state_dict, "last_session_time", "0");
+                    std::string cachedTotalSessionTime = utilities::getOptionalValue<std::string>(state_dict, "total_session_time", "0");
                     
-                    _totalElapsedSessionTime = std::stoull(cachedSessionTime);
-
+                    _lastSessionTime = std::stoull(cachedLastSessionTime);
+                    _totalElapsedSessionTime = std::stoull(cachedTotalSessionTime);
                 }
                 catch(const std::exception& e)
                 {
@@ -1090,8 +1100,11 @@ namespace gameanalytics
 
         void GAState::updateTotalSessionTime()
         {
-            int64_t totalSessionTime = getTotalSessionLength();
-            _gaStore.setState("total_session_time", std::to_string(totalSessionTime));
+            _lastSessionTime = calculateSessionLength();
+            _totalElapsedSessionTime += _lastSessionTime;
+            
+            _gaStore.setState("last_session_time",  std::to_string(_lastSessionTime));
+            _gaStore.setState("total_session_time", std::to_string(_totalElapsedSessionTime));
         }
 
         std::string GAState::getBuild()
