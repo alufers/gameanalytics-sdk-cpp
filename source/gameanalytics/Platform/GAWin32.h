@@ -14,7 +14,7 @@
 
 	#include <direct.h>
 	#include <windows.h>
-	#include <VersionHelpers.h>
+	#include <versionhelpers.h>
 	#include <cerrno>
 	#include <tchar.h>
 	#include <sysinfoapi.h>
