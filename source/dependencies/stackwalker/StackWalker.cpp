@@ -84,7 +84,7 @@
 
 #include "StackWalker.h"
 
-#if defined(_MSC_VER)
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -221,19 +221,7 @@ typedef DWORD64(__stdcall* PTRANSLATE_ADDRESS_ROUTINE64)(HANDLE      hProcess,
 #endif // _MSC_VER < 1300
 #pragma pack(pop)
 
-// Some missing defines (for VC5/6):
-#ifndef INVALID_FILE_ATTRIBUTES
-#define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
-#endif
 
-// secure-CRT_functions are only available starting with VC8
-#if _MSC_VER < 1400
-#define strcpy_s(dst, len, src) strcpy(dst, src)
-#define strncpy_s(dst, len, src, maxLen) strncpy(dst, len, src)
-#define strcat_s(dst, len, src) strcat(dst, src)
-#define _snprintf_s _snprintf
-#define _tcscat_s _tcscat
-#endif
 
 static void MyStrCpy(char* szDest, size_t nMaxDestSize, const char* szSrc)
 {
@@ -1470,4 +1458,3 @@ void StackWalker::OnOutput(LPCSTR buffer)
   OutputDebugStringA(buffer);
 }
 
-#endif // #if defined(_MSC_VER)
